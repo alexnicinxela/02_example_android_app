@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,43 +18,68 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import com.example.helloapp.ui.theme.HelloAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //val myColor: Color = Color(0xFFFF00)
-
-            val myColor: Color = Color(0xFF34f755)
-
-            Text(
-                "Alexander's App\n" +
-                        "example\n" +
-                        "example\n" +
-                        "example\n" +
-                        "exmpl\n" +
-                        "What is Lorem Ipsum?\n" +
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                        "\n" +
-                        "...............",
-                fontSize=30.sp,
-                modifier = Modifier
-                    //.padding(start=100.dp, top=250.dp)
-                    .background(myColor)
+            val count1 = remember{mutableStateOf(0)}
+            val count2 = remember{mutableStateOf(0)}
+            Column {
+                Box(contentAlignment = Alignment.BottomCenter,
+                    modifier = Modifier
+                    .background(Color(0xB3136df2))
+                    .fillMaxWidth()
+                    .weight(1f),
+                )
+                {
+                    Text("Welcome to my first App!", fontSize = 30.sp)
+                }
+                Box(modifier = Modifier
+                    .background(Color.White)
+                    .fillMaxWidth()
+                    .weight(8f)
                     .verticalScroll(rememberScrollState())
-                    //.size(width = 200.dp, height= 100.dp)
-                    //.padding(start=10.dp, top=30.dp)
-
-
-
-
-            )
-            /*HelloAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }*/
+                )
+                {
+                    Text("TEST\nTEST\nTEST\nTEST\nTEST\nTEST\nTEST\nTEST\nTEST\nTEST\n" +
+                                "TEST\n" +
+                                "TEST\n" +
+                                "TEST\n" +
+                                "TEST\n" +
+                                "TEST\n" +
+                                "TEST\n" +
+                                "TEST\n" +
+                                "TEST\n" +
+                                "TEST", fontSize = 50.sp
+                    )
+                }
+                Row(modifier = Modifier
+                    .background(Color(0xB3136df2))
+                    //.fillMaxWidth()
+                    .weight(1f),
+                    //horizontalArrangement = Arrangement.SpaceBetween,
+                    //verticalAlignment = Alignment.CenterVertically
+                )
+                {
+                    Text(
+                        "Click1: ${count1.value}", fontSize = 30.sp, modifier = Modifier
+                            .clickable(onClick = { count1.value += 1 })
+                            .weight(1f)
+                            .fillMaxHeight()
+                    )
+                    Text(
+                        "Click2: ${count2.value}", fontSize = 30.sp, modifier = Modifier
+                            .clickable(onClick = { count2.value += 1 })
+                            .weight(1f)
+                            .fillMaxHeight()
+                    )
+                }
+            }
         }
     }
 }
