@@ -9,15 +9,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,57 +32,77 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val count1 = remember{mutableStateOf(0)}
-            val count2 = remember{mutableStateOf(0)}
+            val message = remember{mutableStateOf("")}
+            val name = remember{mutableStateOf("")}
+            val surname = remember{mutableStateOf("")}
+            val phone = remember{mutableStateOf("")}
+            fun сlearTextField ()
+            {
+                name.value = ""
+                surname.value = ""
+                phone.value = ""
+            }
             Column {
                 Box(contentAlignment = Alignment.BottomCenter,
                     modifier = Modifier
-                    .background(Color(0xB3136df2))
-                    .fillMaxWidth()
-                    .weight(1f),
+                        .background(Color(0xB3136df2))
+                        .fillMaxWidth()
+                        .weight(1f),
                 )
                 {
                     Text("Welcome to my first App!", fontSize = 30.sp)
                 }
-                Box(modifier = Modifier
+
+                Column(verticalArrangement = Arrangement.Top,
+                    modifier = Modifier
                     .background(Color.White)
                     .fillMaxWidth()
                     .weight(8f)
                     .verticalScroll(rememberScrollState())
                 )
                 {
-                    Text("TEST\nTEST\nTEST\nTEST\nTEST\nTEST\nTEST\nTEST\nTEST\nTEST\n" +
-                                "TEST\n" +
-                                "TEST\n" +
-                                "TEST\n" +
-                                "TEST\n" +
-                                "TEST\n" +
-                                "TEST\n" +
-                                "TEST\n" +
-                                "TEST\n" +
-                                "TEST", fontSize = 50.sp
+                    TextField(value = name.value,
+                        textStyle = TextStyle(fontSize=25.sp),
+                        onValueChange = {newText -> name.value = newText},
+                        placeholder = {Text("Имя", fontSize = 20.sp)},
+                        singleLine = true
+                    )
+                    TextField(value = surname.value,
+                        textStyle = TextStyle(fontSize=25.sp),
+                        onValueChange = {newText -> surname.value = newText},
+                        placeholder = {Text("Фамилия", fontSize = 20.sp)},
+                        singleLine = true
+                    )
+                    TextField(value = phone.value,
+                        textStyle = TextStyle(fontSize=25.sp),
+                        onValueChange = {newText -> phone.value = newText},
+                        placeholder = {Text("Телефон", fontSize = 20.sp)},
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
                     )
                 }
+
                 Row(modifier = Modifier
                     .background(Color(0xB3136df2))
-                    //.fillMaxWidth()
                     .weight(1f),
-                    //horizontalArrangement = Arrangement.SpaceBetween,
-                    //verticalAlignment = Alignment.CenterVertically
                 )
                 {
-                    Text(
-                        "Click1: ${count1.value}", fontSize = 30.sp, modifier = Modifier
-                            .clickable(onClick = { count1.value += 1 })
-                            .weight(1f)
-                            .fillMaxHeight()
+                    TextButton(onClick = { сlearTextField() }, modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
+                        colors = ButtonDefaults.textButtonColors(contentColor = Color.Black)
                     )
-                    Text(
-                        "Click2: ${count2.value}", fontSize = 30.sp, modifier = Modifier
-                            .clickable(onClick = { count2.value += 1 })
-                            .weight(1f)
-                            .fillMaxHeight()
+                    {
+                        Text("Очистить", fontSize = 25.sp)
+                    }
+                    TextButton(onClick = {}, modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
+                        enabled = false
                     )
+                    {
+                        Text("Добавить", fontSize = 25.sp)
+                    }
                 }
             }
         }
